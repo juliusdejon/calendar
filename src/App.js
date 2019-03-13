@@ -7,7 +7,6 @@ import "./App.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import logo from "./logo.svg";
-import {parse,add} from 'date-fns/parse'
 Calendar.setLocalizer(Calendar.momentLocalizer(moment));
 
 const BigCalendar = withDragAndDrop(Calendar);
@@ -42,8 +41,9 @@ class App extends Component {
   .then(function(response) {
     return response.json();
   })
-  .then(function(myJson) {
-    const holidaysJSON = myJson.holidays;
+  .then((res)=> {
+    // eslint-disable-next-line
+    const holidaysJSON = res.holidays;
     let holidays = holidaysJSON.map(value => {
       const date = `${value.date} ${ new Date().getFullYear()}`;
       console.log(date);
@@ -66,7 +66,7 @@ class App extends Component {
     const season = window.prompt('Create a Special Season')
     if (season) {
     const yes = window.prompt('Apply this every year?')
-      if(yes == 'yes') {
+      if(yes === 'yes') {
         alert('This will be applied every year')
         this.setState({
           events: [
